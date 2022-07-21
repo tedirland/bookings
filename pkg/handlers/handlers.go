@@ -50,3 +50,42 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 		StringMap: stringMap,
 	})
 }
+
+// Reservation is the handler for the reservation page page
+func (m *Repository) Reservaiton(w http.ResponseWriter, r *http.Request) {
+	// perform some logic
+	stringMap := make(map[string]string)
+	stringMap["test"] = "Hello, again"
+
+	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
+	stringMap["remote_ip"] = remoteIP
+
+	// send data to the template
+	render.RenderTemplate(w, "make-reservation.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+	})
+}
+
+// Generals is the handler for the Generals page page
+func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "generals.page.tmpl", &models.TemplateData{})
+}
+
+// Majors is the handler for the Majors page page
+func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "majors.page.tmpl", &models.TemplateData{})
+}
+
+// Availability is the handler for the Availability page page
+func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "search-availability.page.tmpl", &models.TemplateData{})
+}
+
+// Contact is the handler for the contact page page
+func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
+
+	render.RenderTemplate(w, "contact.page.tmpl", &models.TemplateData{})
+}
