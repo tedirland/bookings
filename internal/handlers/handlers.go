@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/tedirland/bookings/internal/config"
+	"github.com/tedirland/bookings/internal/forms"
 	"github.com/tedirland/bookings/internal/models"
 	"github.com/tedirland/bookings/internal/render"
 )
@@ -56,17 +57,56 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 
 // Reservation is the handler for the reservation page page
 func (m *Repository) Reservaiton(w http.ResponseWriter, r *http.Request) {
-	// perform some logic
-	stringMap := make(map[string]string)
-	stringMap["test"] = "Hello, again"
 
-	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
-	stringMap["remote_ip"] = remoteIP
+	var emptyReservation models.Reservaiton
+	data := make(map[string]interface{})
+	data["reservation"] = emptyReservation
 
 	// send data to the template
 	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
-		StringMap: stringMap,
+		Form: forms.New(nil),
+		Data: data,
 	})
+}
+
+// PostReservation handles the posting of a reservation form
+func (m *Repository) PostReservaiton(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	reservation := models.Reservaiton{
+		FirstName: r.Form.Get("first_name"),
+		LastName:  r.Form.Get("last_name"),
+		Email:     r.Form.Get("email"),
+		Phone:     r.Form.Get("phone"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	// form.Has("first_name", r)
+	form.Required("first_name", "last_name", "email")
+	form.MinLength("first_name", 3, r)
+	form.IsEmail("email")
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["reservation"] = reservation
+
+		// send data to the template
+		render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "reservation", reservation)
+
+	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
+
 }
 
 // Generals is the handler for the Generals page page
@@ -119,4 +159,22 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 
 	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
+	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservaiton)
+
+	if !ok {
+		log.Println("cannot get item from session")
+		m.App.Session.Put(r.Context(), "error", "Can't get reservation from session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Remove(r.Context(), "reservation")
+	data := make(map[string]interface{})
+	data["reservation"] = reservation
+	render.RenderTemplate(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }
