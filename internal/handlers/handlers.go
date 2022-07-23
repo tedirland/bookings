@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/tedirland/bookings/pkg/config"
-	"github.com/tedirland/bookings/pkg/models"
-	"github.com/tedirland/bookings/pkg/render"
+	"github.com/tedirland/bookings/internal/config"
+	"github.com/tedirland/bookings/internal/models"
+	"github.com/tedirland/bookings/internal/render"
 )
 
 // Repo the repository used by the handlers

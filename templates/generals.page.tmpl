@@ -47,27 +47,13 @@
 
 </div>
 
+</div>
+{{end}}
 
-<footer class="my-footer">
-    <div class="row">
-        <div class="col">
-            left
-        </div>
-
-        <div class="col">
-            center
-        </div>
-
-        <div class="col">
-            right
-        </div>
-    </div>
-    {{end}}
-
-    {{define "js"}}
-    <script>
-        document.getElementById("check-availability-button").addEventListener("click", function () {
-            let html = `
+{{define "js"}}
+<script>
+    document.getElementById("check-availability-button").addEventListener("click", function () {
+        let html = `
             <form id="check-availability-form" action="" method="post" novalidate class="needs-validation">
                 <div class="form-row">
                     <div class="col">
@@ -84,23 +70,42 @@
                 </form>
             
             `
-            attention.custom({
-                title: "Choose Your Dates",
-                msg: html,
-                callback: function (result) {
-                    console.log("called")
+        attention.custom({
+            title: "Choose Your Dates",
+            msg: html,
+            willOpen: () => {
+                const elem = document.getElementById("reservation-dates-modal")
+                const rangePicker = new DateRangePicker(elem, {
+                    format: "yyyy-mm-dd",
+                    showOnFocus: true
+                });
+            },
+            didOpen: () => {
+                document.getElementById('start').removeAttribute('disabled')
+                document.getElementById('end').removeAttribute('disabled')
+            },
+            callback: function (result) {
+                console.log("called")
+                let form = document.getElementById("check-availability-form");
+                let formData = new FormData(form);
+                formData.append("csrf_token", "{{.CSRFToken}}")
 
-                    fetch("/search-availability-json")
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data)
-                            console.log(data.message)
-                            console.log(data.ok)
-                        })
-                }
-            });
-        })
 
-    </script>
 
-    {{end}}
+                fetch("/search-availability-json", {
+                    method: "post",
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        console.log(data.message)
+                        console.log(data.ok)
+                    })
+            }
+        });
+    })
+
+</script>
+
+{{end}}
