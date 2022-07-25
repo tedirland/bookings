@@ -1,0 +1,23 @@
+mode: set
+github.com/tedirland/bookings/internal/render/render.go:22.40,24.2 1 1
+github.com/tedirland/bookings/internal/render/render.go:26.84,34.2 5 1
+github.com/tedirland/bookings/internal/render/render.go:37.105,40.18 2 1
+github.com/tedirland/bookings/internal/render/render.go:47.2,48.9 2 1
+github.com/tedirland/bookings/internal/render/render.go:52.2,59.16 5 1
+github.com/tedirland/bookings/internal/render/render.go:63.2,63.12 1 1
+github.com/tedirland/bookings/internal/render/render.go:40.18,43.3 1 0
+github.com/tedirland/bookings/internal/render/render.go:43.8,45.3 1 1
+github.com/tedirland/bookings/internal/render/render.go:48.9,50.3 1 1
+github.com/tedirland/bookings/internal/render/render.go:59.16,62.3 2 0
+github.com/tedirland/bookings/internal/render/render.go:68.67,73.16 3 1
+github.com/tedirland/bookings/internal/render/render.go:77.2,77.29 1 1
+github.com/tedirland/bookings/internal/render/render.go:99.2,99.21 1 1
+github.com/tedirland/bookings/internal/render/render.go:73.16,75.3 1 0
+github.com/tedirland/bookings/internal/render/render.go:77.29,80.17 3 1
+github.com/tedirland/bookings/internal/render/render.go:84.3,85.17 2 1
+github.com/tedirland/bookings/internal/render/render.go:89.3,89.23 1 1
+github.com/tedirland/bookings/internal/render/render.go:96.3,96.21 1 1
+github.com/tedirland/bookings/internal/render/render.go:80.17,82.4 1 0
+github.com/tedirland/bookings/internal/render/render.go:85.17,87.4 1 0
+github.com/tedirland/bookings/internal/render/render.go:89.23,91.18 2 1
+github.com/tedirland/bookings/internal/render/render.go:91.18,93.5 1 0

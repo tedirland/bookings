@@ -34,3 +34,19 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 
 }
+
+// We're basically creating a dummy copy of a HTTP Request Writer. That type can only be generated with a real GHTTP requast and we want to mock one
+type myWriter struct{}
+
+func (tw *myWriter) Header() http.Header {
+	var h http.Header
+	return h
+}
+
+func (tw *myWriter) WriteHeader(i int) {
+
+}
+func (tw *myWriter) Write(b []byte) (int, error) {
+	length := len(b)
+	return length, nil
+}

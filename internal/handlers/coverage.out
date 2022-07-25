@@ -1,0 +1,22 @@
+mode: set
+github.com/tedirland/bookings/internal/handlers/handlers.go:24.47,28.2 1 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:31.33,33.2 1 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:36.67,41.2 3 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:44.68,56.2 5 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:59.74,70.2 4 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:73.78,75.16 2 0
+github.com/tedirland/bookings/internal/handlers/handlers.go:80.2,94.19 6 0
+github.com/tedirland/bookings/internal/handlers/handlers.go:106.2,108.66 2 0
+github.com/tedirland/bookings/internal/handlers/handlers.go:75.16,78.3 2 0
+github.com/tedirland/bookings/internal/handlers/handlers.go:94.19,104.3 4 0
+github.com/tedirland/bookings/internal/handlers/handlers.go:113.71,116.2 1 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:119.69,122.2 1 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:125.75,128.2 1 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:131.79,136.2 3 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:144.79,151.16 3 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:154.2,155.14 2 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:151.16,153.3 1 0
+github.com/tedirland/bookings/internal/handlers/handlers.go:159.70,162.2 1 1
+github.com/tedirland/bookings/internal/handlers/handlers.go:164.81,167.9 2 0
+github.com/tedirland/bookings/internal/handlers/handlers.go:174.2,179.4 4 0
+github.com/tedirland/bookings/internal/handlers/handlers.go:167.9,172.3 4 0
