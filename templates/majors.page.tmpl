@@ -69,7 +69,60 @@
                 </form>
             
             `
-        attention.custom({ title: "Choose Your Dates", msg: html });
+      attention.custom({
+            title: "Choose Your Dates",
+            msg: html,
+            willOpen: () => {
+                const elem = document.getElementById("reservation-dates-modal")
+                const rangePicker = new DateRangePicker(elem, {
+                    format: "yyyy-mm-dd",
+                    minDate: new Date(),
+                    showOnFocus: true
+                });
+            },
+            didOpen: () => {
+                document.getElementById('start').removeAttribute('disabled')
+                document.getElementById('end').removeAttribute('disabled')
+            },
+            callback: function (result) {
+                
+                let form = document.getElementById("check-availability-form");
+                let formData = new FormData(form);
+                formData.append("csrf_token", "{{.CSRFToken}}")
+                formData.append("room_id","2");
+
+
+
+                fetch("/search-availability-json", {
+                    method: "post",
+                    body: formData,
+                    
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if(data.ok){
+                            attention.custom({
+                                icon: 'success',
+                                showConfirmButton: false,
+                                showCancelButton: false,
+                                msg: '<p>Room is available</p>'
+                                    + '<a href="/book-room?id='
+                                    + data.room_id
+                                    +'&s='
+                                    + data.start_date
+                                    +'&e='
+                                    +data.end_date
+                                    + '" class="btn btn-primary">'
+                                    + 'Book now!</a>'
+                            })
+                        }else {
+                            attention.error({
+                                msg: "No availability",
+                            })
+                        }
+                    })
+            }
+        });
     })
 
 </script>
