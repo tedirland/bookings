@@ -196,7 +196,7 @@
                 Swal.fire({
                     icon: "success",
                     title: title,
-                    text: text,
+                    text: msg,
                     footer
                 })
 
@@ -204,7 +204,7 @@
 
             let error = function (c) {
                 const {
-                    text = "",
+                    msg = "",
                     title = "",
                     footer = "",
                 } = c
@@ -212,7 +212,7 @@
                 Swal.fire({
                     icon: 'error',
                     title: title,
-                    text: text,
+                    text: msg,
                     footer: footer,
                 })
 
@@ -220,16 +220,21 @@
 
             async function custom(c) {
                 const {
+                    icon = "",
                     msg = "",
-                    title = ""
+                    title = "",
+                    showConfirmButton = true,
+                    showCancelButton= true,
                 } = c
 
                 const { value: result } = await Swal.fire({
+                    icon: icon,
                     title: title,
                     html: msg,
                     backdrop: false,
                     focusConfirm: false,
-                    showCancelButton: true,
+                    showCancelButton: showCancelButton,
+                    showConfirmButton: showConfirmButton,
                     willOpen: () => {
                         if (c.willOpen !== undefined) {
                             c.willOpen();

@@ -131,7 +131,7 @@ func (m *Repository) PostReservaiton(w http.ResponseWriter, r *http.Request) {
 
 	restriction := models.RoomRestriciton{
 		StartDate:     reservation.StartDate,
-		EndDate:       reservation.StartDate,
+		EndDate:       reservation.EndDate,
 		RoomId:        reservation.RoomId,
 		ReservationID: newReservationID,
 		RestrictionID: 1,
@@ -211,15 +211,32 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 }
 
 type jsonResonse struct {
-	OK      bool   `json:"ok"`
-	Message string `json:"message"`
+	OK        bool   `json:"ok"`
+	Message   string `json:"message"`
+	RoomID    string `json:"room_id"`
+	StartDate string `json:"start_date"`
+	EndDate   string `json:"end_date"`
 }
 
 // AvailabilityJSON handles POST request to availability endpoint and returns JSON
 func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
+
+	sd := r.Form.Get("start")
+	ed := r.Form.Get("end")
+
+	layout := "2006-01-02"
+	startDate, _ := time.Parse(layout, sd)
+	endDate, _ := time.Parse(layout, ed)
+
+	roomId, _ := strconv.Atoi(r.Form.Get("room_id"))
+
+	available, _ := m.DB.SearchAvailabilityByDatesByRoomID(startDate, endDate, roomId)
 	resp := jsonResonse{
-		OK:      false,
-		Message: "Available",
+		OK:        available,
+		Message:   "",
+		StartDate: sd,
+		EndDate:   ed,
+		RoomID:    strconv.Itoa(roomId),
 	}
 
 	out, err := json.MarshalIndent(resp, "", "     ")
